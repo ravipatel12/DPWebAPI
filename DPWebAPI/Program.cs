@@ -1,6 +1,8 @@
 using DPWebAPI.DBContexts;
+using DPWebAPI.Models;
 using DPWebAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,11 +16,15 @@ if(builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName ==
 //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUserDetails, UserService>();
 builder.Services.AddScoped<ILoginDetails, LoginDetails>();
+builder.Services.AddScoped<IReportDetails, ReportDetails>();
+builder.Services.AddScoped<IReportDetails, ReportDetails>();
+builder.Services.AddScoped<ICommonModule, CommonModel>();
 builder.Services.AddDbContext<ApplicationDBContext>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers(options => options.RespectBrowserAcceptHeader = true).AddXmlSerializerFormatters().AddXmlDataContractSerializerFormatters();
 
 var app = builder.Build();
 

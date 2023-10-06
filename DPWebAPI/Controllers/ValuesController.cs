@@ -12,6 +12,12 @@ using DPWebAPI.Repositories;
 
 using System.Collections;
 using System.Net;
+using System.Runtime.Serialization;
+using System.Text;
+using DPWebAPI.Models;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Xml.Linq;
+using Microsoft.AspNetCore.Cors;
 
 namespace DPWebAPI.Controllers
 {
@@ -21,9 +27,13 @@ namespace DPWebAPI.Controllers
     {
         private readonly IUserDetails userService;
         private readonly ILoginDetails loginService;
-        public ValuesController(ILoginDetails loginService)
+        private readonly IReportDetails ReportService;
+        private readonly ICommonModule CommonModule;
+        public ValuesController(ILoginDetails loginService,IReportDetails reportDetails, ICommonModule commonModule)
         {
             this.loginService = loginService;
+            this.ReportService = reportDetails;
+            CommonModule = commonModule;
         }
 
         [HttpGet("GetLoginDetails")]
@@ -46,20 +56,93 @@ namespace DPWebAPI.Controllers
 
             return new JsonResult(jsonData);
         }
-
-        [HttpGet("GetUserListAsync")]
-        public async Task<List<Common.UserDetails>> GetUserListAsync()
+        [HttpGet("GetWebOrderHistoryReport")]
+        //[Route("AjaxMethod")]
+        //[Consumes("application/xml", "application/json")]
+        //[Produces("application/xml", "application/json")]
+        //[EnableCors("AllowAllHeaders")]
+        //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)
+        public async Task<IActionResult> GetWebOrderHistoryReport(string xml)
         {
+
+            IEnumerable<Common.WebOrderHistoryReport> result = null;
+            var jsonData = new object();
             try
             {
-                return await userService.GetUserListAsync();
-
+                result = await ReportService.GetWebOrderHistoryReportAsync(xml.ToString());
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
             }
             catch (Exception ex)
             {
-                string a = ex.Message;
-                throw;
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
             }
+
+            return new JsonResult(jsonData);
         }
+        [HttpGet("GetItemType")]
+        public async Task<IActionResult> GetItemType(int ItemTypeId)
+        {
+
+            IEnumerable<Common.ItemTypeMaster> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetItemTypeAsync(ItemTypeId);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+
+        [HttpGet("GetItemTypeWithChild")]
+        public async Task<IActionResult> GetItemTypeWithChild(int ItemTypeId)
+        {
+
+            IEnumerable<Common.ItemTypeMaster> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetItemTypeWithChildAsync(ItemTypeId);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+        [HttpGet("GetParty")]
+        public async Task<IActionResult> GetParty(int SalesPersonId, int AgentId, int DealerPartyId)
+        {
+
+            IEnumerable<Common.PartyMaster> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetPartyAsync(SalesPersonId, AgentId, DealerPartyId);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+
+
     }
 }
