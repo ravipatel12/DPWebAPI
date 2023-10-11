@@ -142,7 +142,111 @@ namespace DPWebAPI.Controllers
 
             return new JsonResult(jsonData);
         }
+        [HttpGet("GetItemForPlaceOrder")]
+        public async Task<IActionResult> GetItemForPlaceOrder(int PartyId, int Item1Type, int Item2Type, int Item3Type, int Item4Type, int SerchableItemId)
+        {
+
+            IEnumerable<Common.ItemMasterForPlaceOrder> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetItemForPlaceOrderAsync(PartyId, Item1Type, Item2Type, Item3Type, Item4Type, SerchableItemId);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+        [HttpGet("GetItem")]
+        public async Task<IActionResult> GetItem()
+        {
+
+            IEnumerable<Common.ItemMaster> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetItemAsync();
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+        [HttpPost("SaveOrder")]
+        //[Route("AjaxMethod")]
+        [Consumes("application/xml", "application/json")]
+        [Produces("application/xml", "application/json")]
+        //[EnableCors("AllowAllHeaders")]
+        //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)
+        public async Task<IActionResult> SaveOrder(string TableName,[FromBody] XElement xml)
+        {
+
+            IEnumerable<Common.ErrorMessage> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.SaveOrderAsync(TableName,xml.ToString());
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
 
 
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+        [HttpGet("MailerDetails")]
+        public async Task<IActionResult> MailerDetails(int UserId, string ParameterValue)
+        {
+
+            IEnumerable<Common.MailerData> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.MailerDetailsAsync(UserId, ParameterValue);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+        [HttpGet("CardItemDetails")]
+        public async Task<IActionResult> CardItemDetails(int UserId, int ClientId)
+        {
+
+            IEnumerable<Common.CartItem> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.CardItemDetailsAsync(UserId, ClientId);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
     }
 }

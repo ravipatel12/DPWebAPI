@@ -69,14 +69,79 @@ namespace DPWebAPI.Entities
             public int PartyID { get; set; }
             public string PartyCode { get; set; }
             public string Party { get; set; }
-            
+            public string Address { get; set; }
+            public string State { get; set; }
+            public string City { get; set; }
+            public string Email { get; set; }
+            public string SalesPersonEmailId { get; set; }
 
+
+        }
+        public class ItemMasterForPlaceOrder
+        {
+            [Key]
+            public int ItemId { get; set; }
+            public string ItemName { get; set; }
+            public string ItemCode { get; set; }
+            public string OurCode { get; set; }
+            public string OurName { get; set; }
+            public decimal PackingSize { get; set; }
+            public decimal Rate { get; set; }
+            public int BDL { get; set; }
+            public int FactoryID { get; set; }
+            public int ItemTypeId { get; set; }
+
+
+
+
+        }
+        public class ItemMaster
+        {
+            [Key]
+            public int ItemId { get; set; }
+            public string ItemName { get; set; }
+            public string ItemCode { get; set; }
+            public string OurCode { get; set; }
+            public string OurName { get; set; }
+           
+        }
+        public class MailerData
+        {
+            
+            public string? MailFrom { get; set; }
+            public string?NewTmp { get; set; }
+            public string?MailCC { get; set; }
+            public string?MailBCC { get; set; }
+            public string?MailServer { get; set; }
+            public string?MailUserName { get; set; }
+            public int? MailPort { get; set; }
+            public string? CommToMailId { get; set; }
+            public bool? SSL { get; set; }
+            public string? ContactUsMailId { get; set; }
+
+        }
+        public class CartItem
+        {
+            [Key]
+            public int WebOrderID { get; set; }
+            public string? OurName { get; set; }
+            public string? OurCode { get; set; }
+            public string? ItemCode { get; set; }
+            public string? ItemName { get; set; }
+            public decimal PackingSize { get; set; }
+            public decimal NoOfBoxes { get; set; }
+            public int FactoryId { get; set; }
+            public string? ShortName { get; set; }
+            public string? FactoryIds { get; set; }
+            public decimal Rate { get; set; }
+
+        }
+        public class ErrorMessage
+        {
+            public int ErrorId { get; set; }
+            public string ErrorMsg { get; set; }
         }
 
     }
-    public class Status
-    {
-        public int ResultId { get; set; }
-        public string Result { get; set; }
-    }
+    
 }

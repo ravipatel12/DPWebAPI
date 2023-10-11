@@ -28,6 +28,9 @@ namespace DPWebAPI.DBContexts
             modelBuilder.Entity<Common.PartyMaster>()
                 .HasNoKey()
                 .ToView("PartyMasterView");
+            modelBuilder.Entity<Common.MailerData>()
+                .HasNoKey()
+                .ToView("MailerDataView");
         }
 
         public DbSet<Common.UserDetails> UserDetail { get; set; }
@@ -35,6 +38,10 @@ namespace DPWebAPI.DBContexts
         public DbSet<Common.WebOrderHistoryReport> WebOrderReport { get; set; }
         public DbSet<Common.ItemTypeMaster> ItemType { get; set; }
         public DbSet<Common.PartyMaster> PartyDetails { get; set; }
+        public DbSet<Common.ItemMasterForPlaceOrder> ItemDetailsForPO { get; set; }
+        public DbSet<Common.ItemMaster> ItemDetails { get; set; }
+        public DbSet<Common.MailerData> MailerDetails { get; set; }
+        public DbSet<Common.CartItem> CardItemDetails { get; set; }
         public DbSet<DPWebAPI.Entities.Common>? Common { get; set; }
     }
 }
