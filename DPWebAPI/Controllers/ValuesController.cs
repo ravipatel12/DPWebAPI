@@ -300,5 +300,25 @@ namespace DPWebAPI.Controllers
 
             return new JsonResult(jsonData);
         }
+        [HttpGet("GetPendingwebOrderForSO")]
+        public async Task<IActionResult> GetPendingwebOrderForSO()
+        {
+
+            IEnumerable<Common.WebOrderToSo> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetPendingwebOrderForSOAsync();
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
     }
 }

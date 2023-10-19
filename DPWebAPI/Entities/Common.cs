@@ -164,6 +164,29 @@ namespace DPWebAPI.Entities
             public decimal Rate { get; set; }
         }
 
+        public class WebOrderToSo
+        {
+            [Key]
+            public int WebOrderID { get; set; }
+            public string? WebOrderNo { get; set; }
+            public string? WebOrderDate { get; set; }
+            public int ClientId { get; set; }
+            public string? Party { get; set; }
+            public int YearId { get; set; }
+            public string? UserName { get; set; }
+            public int ItemID { get; set; }
+            public decimal PackingSize { get; set; }
+            public decimal NoOfBoxes { get; set; }
+            public string? ItemCode { get; set; }
+            public string? ItemName { get; set; }
+            public decimal Rate { get; set; }
+            public string? Remarks { get; set; }
+            public int FactoryId { get; set; }
+            public string? OrderRemark { get; set; }
+            
+
+        }
+
     }
     
 }

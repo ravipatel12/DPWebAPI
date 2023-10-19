@@ -260,6 +260,20 @@ namespace DPWebAPI.Models
 
 
         }
+
+        public async Task<IEnumerable<Common.WebOrderToSo>> GetPendingwebOrderForSOAsync()
+        {
+
+
+           
+
+            var wotosoDetails = await Task.Run(() => _dbContext.wotosoDetails
+                            .FromSqlRaw(@"exec GetPendingwebOrderForSO").ToListAsync());
+
+            return wotosoDetails;
+
+
+        }
     }
     
 }
