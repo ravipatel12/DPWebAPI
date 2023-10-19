@@ -42,6 +42,7 @@ namespace DPWebAPI.DBContexts
         public DbSet<Common.ItemMaster> ItemDetails { get; set; }
         public DbSet<Common.MailerData> MailerDetails { get; set; }
         public DbSet<Common.CartItem> CardItemDetails { get; set; }
+        public DbSet<Common.WebOrderConfirm> webOrderDetails { get; set; }
         public DbSet<DPWebAPI.Entities.Common>? Common { get; set; }
     }
 }

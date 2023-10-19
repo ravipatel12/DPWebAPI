@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NuGet.Configuration;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
 
@@ -172,11 +173,90 @@ namespace DPWebAPI.Models
             param.Add(new SqlParameter("@ClientId", ClientId));
 
 
-
             var CardItemDetails = await Task.Run(() => _dbContext.CardItemDetails
                             .FromSqlRaw(@"exec GetCartItemJDP @UserId,@ClientId", param.ToArray()).ToListAsync());
 
             return CardItemDetails;
+
+
+
+        }
+        public async Task<IEnumerable<Common.ErrorMessage>> DeleteItemAsync(int WebOrderId)
+        {
+            List<Common.ErrorMessage> msg = new List<Common.ErrorMessage>();
+
+            // IEnumerable<Common.ErrorMessage> enumerable = (IEnumerable<Common.ErrorMessage>)msg;
+
+
+            var param = new SqlParameter[] {
+            new SqlParameter() {
+             ParameterName = "@WebOrderId",
+             SqlDbType =  System.Data.SqlDbType.Int,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = WebOrderId
+            },
+            
+            new SqlParameter() {
+             ParameterName = "@ErroOut",
+             SqlDbType =  System.Data.SqlDbType.Int,
+             Direction = System.Data.ParameterDirection.Output,
+            },
+            new SqlParameter() {
+             ParameterName = "@ErrMsg",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Output,
+             Size = 50
+            }};
+
+
+
+
+            //var ItemDetailsForPO = await Task.Run(() => _dbContext.ItemDetailsForPO
+            //                .FromSqlRaw(@"exec SaveOrderDetailsForJDP @TableName,@xml,@ErroOut,@ErrMsg", param.ToArray()).ToListAsync());
+
+            var sql = "exec DeleteCartItemJDP @WebOrderId,@ErroOut OUT,@ErrMsg OUT";
+            var resultObj = _dbContext.Database.ExecuteSqlRaw(sql, param.ToArray());
+
+            //msg.ErrorId = Convert.ToInt32(param[2].Value.ToString());
+            //msg.ErrorMsg = param[3].Value.ToString();
+
+            msg.Add(new Common.ErrorMessage { ErrorId = Convert.ToInt32(param[1].Value.ToString()), ErrorMsg = param[2].Value.ToString() });
+
+            return msg;
+
+
+        }
+        public async Task<IEnumerable<Common.WebOrderConfirm>> ConfirmOrderAsync(string OrderRemark, string TableName, string xml)
+        {
+            
+
+
+            var param = new SqlParameter[] {
+            
+            new SqlParameter() {
+             ParameterName = "@TableName",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = TableName
+            },
+            new SqlParameter() {
+             ParameterName = "@xml",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = xml
+            },
+            new SqlParameter() {
+             ParameterName = "@OrderRemark",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = (object)OrderRemark ?? DBNull.Value
+        }
+    };
+
+            var webOrderDetails = await Task.Run(() => _dbContext.webOrderDetails
+                            .FromSqlRaw(@"exec SPConfirmOrderJDP @TableName,@xml,@OrderRemark", param.ToArray()).ToListAsync());
+
+            return webOrderDetails;
 
 
         }

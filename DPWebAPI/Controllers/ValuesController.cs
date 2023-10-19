@@ -248,6 +248,57 @@ namespace DPWebAPI.Controllers
 
             return new JsonResult(jsonData);
         }
-    }
+        [HttpPost("DeleteItem")]
+        //[Route("AjaxMethod")]
+        [Consumes("application/xml", "application/json")]
+        [Produces("application/xml", "application/json")]
+        //[EnableCors("AllowAllHeaders")]
+        //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)
+        public async Task<IActionResult> DeleteItem(int WebOrderId)
+        {
 
+            IEnumerable<Common.ErrorMessage> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.DeleteItemAsync(WebOrderId);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+        [HttpPost("ConfirmOrder")]
+        //[Route("AjaxMethod")]
+        [Consumes("application/xml", "application/json")]
+        [Produces("application/xml", "application/json")]
+        //[EnableCors("AllowAllHeaders")]
+        //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)
+        public async Task<IActionResult> ConfirmOrder(string? OrderRemark, string TableName, [FromBody] XElement xml)
+        {
+
+            IEnumerable<Common.WebOrderConfirm> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.ConfirmOrderAsync(OrderRemark,TableName, xml.ToString());
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+    }
 }

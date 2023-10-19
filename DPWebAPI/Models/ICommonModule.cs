@@ -14,6 +14,8 @@ namespace DPWebAPI.Models
         public Task<IEnumerable<Common.ErrorMessage>> SaveOrderAsync(string TableName, string xml);
         public Task<IEnumerable<Common.MailerData>> MailerDetailsAsync(int UserId, string ParameterValue);
         public Task<IEnumerable<Common.CartItem>> CardItemDetailsAsync(int UserId, int ClientId);
+        public Task<IEnumerable<Common.ErrorMessage>> DeleteItemAsync(int WebOrderId);
+        public Task<IEnumerable<Common.WebOrderConfirm>> ConfirmOrderAsync(string OrderRemark,string TableName, string xml);
 
 
     }

@@ -90,6 +90,9 @@ namespace DPWebAPI.Entities
             public int BDL { get; set; }
             public int FactoryID { get; set; }
             public int ItemTypeId { get; set; }
+            public string? Series { get; set; }
+            public string? UOM { get; set; }
+            public int ProjectId { get; set; }
 
 
 
@@ -134,12 +137,31 @@ namespace DPWebAPI.Entities
             public string? ShortName { get; set; }
             public string? FactoryIds { get; set; }
             public decimal Rate { get; set; }
+            public string? Series { get; set; }
+            public string? UOM { get; set; }
+            public decimal Qty { get; set; }
 
         }
         public class ErrorMessage
         {
             public int ErrorId { get; set; }
             public string ErrorMsg { get; set; }
+        }
+
+        public class WebOrderConfirm
+        {
+            [Key]
+            public int SRNo { get; set; }
+            public string? OrderNo { get; set; }
+            public string? OrderDate { get; set; }
+            public string? ItemName { get; set; }
+            public string? ItemCode { get; set; }
+            public decimal NoOfBoxes { get; set; }
+            public string? Party { get; set; }
+            public string? Address { get; set; }
+            public string? Remark { get; set; }
+            public string? OrderRemark { get; set; }
+            public decimal Rate { get; set; }
         }
 
     }
