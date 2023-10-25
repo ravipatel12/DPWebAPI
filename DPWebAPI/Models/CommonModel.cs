@@ -7,19 +7,150 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NuGet.Configuration;
+using System.Data.SqlTypes;
+using System.Data;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Threading;
+using Newtonsoft.Json;
 
 namespace DPWebAPI.Models
 {
     public class CommonModel : ICommonModule
     {
         private readonly ApplicationDBContext _dbContext;
-
+        private SqlConnection sqlConn;
         public CommonModel(ApplicationDBContext dbContext)
         {
             _dbContext = dbContext;
+           
         }
+        #region start DB Connection any body don't try to make a changes on this block 
+        public void OpenConnection()
+        {
+
+            using (var cnn = _dbContext.Database.GetDbConnection())
+            {
+
+                try
+                {
+                    sqlConn = new SqlConnection(cnn.ConnectionString.ToString());
+                    sqlConn.Open();
+
+                   
+                }
+                catch (Exception ex)
+                {
+                    //throw ex;
+                    if (sqlConn.State != ConnectionState.Closed)
+                    {
+                        sqlConn.Close();
+
+                    }
+                }
+            }
+        }
+        public IDbCommand CreateCommand(string procName, IDbDataParameter[] @params)
+        {
+            OpenConnection();
+            SqlCommand sqlCmd = null;
+            sqlCmd = new SqlCommand(procName, sqlConn);
+            sqlCmd.CommandTimeout = 600;
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            if (@params != null)
+            {
+                foreach (SqlParameter parameter in @params)
+                {
+                    sqlCmd.Parameters.Add(parameter);
+                }
+            }
+            sqlCmd.Parameters.Add(new SqlParameter("ReturnValue", SqlDbType.Int, 4, ParameterDirection.ReturnValue, false, 0, 0, string.Empty, DataRowVersion.Default, null));
+            return (IDbCommand)sqlCmd;
+        }
+        public int ExecuteProc(string procName)
+        {
+            SqlCommand sqlCmd = (SqlCommand)CreateCommand(procName, null);
+            sqlCmd.ExecuteNonQuery();
+            sqlCmd.Dispose();
+            this.Dispose();
+            return (int)sqlCmd.Parameters["ReturnValue"].Value;
+        }
+
+        public int ExecuteProc(string procName, IDbDataParameter[] @params)
+        {
+            SqlCommand sqlCmd = (SqlCommand)CreateCommand(procName, @params);
+            sqlCmd.ExecuteNonQuery();
+            sqlCmd.Dispose();
+            this.Dispose();
+            return (int)sqlCmd.Parameters["ReturnValue"].Value;
+        }
+
+        public void ExecuteProc(string procName, ref DataSet dataSetObject)
+        {
+            SqlCommand sqlCmd = (SqlCommand)CreateCommand(procName, null);
+            SqlDataAdapter dtAdapter = new SqlDataAdapter(sqlCmd);
+            DataSet dtSetObject = new DataSet();
+            dtAdapter.Fill(dtSetObject);
+            dataSetObject = dtSetObject;
+            sqlCmd.Dispose();
+            this.Dispose();
+        }
+
+        public void ExecuteProc(string procName, IDbDataParameter[] @params, ref DataSet dataSetObject)
+        {
+            SqlCommand sqlCmd = (SqlCommand)CreateCommand(procName, @params);
+            SqlDataAdapter dtAdapter = new SqlDataAdapter(sqlCmd);
+            DataSet dtSetObject = new DataSet();
+            dtAdapter.Fill(dtSetObject);
+            dataSetObject = dtSetObject;
+
+            sqlCmd.Dispose();
+            this.Dispose();
+        }
+
+        public void ExecuteProc(string procName, IDbDataParameter[] @params, ref DataTable dataSetObject)
+        {
+            SqlCommand sqlCmd = (SqlCommand)CreateCommand(procName, @params);
+            SqlDataAdapter dtAdapter = new SqlDataAdapter(sqlCmd);
+            dtAdapter.Fill(dataSetObject);
+            sqlCmd.Dispose();
+            this.Dispose();
+        }
+
+        public void ExecuteProc(string procName, IDbDataParameter[] @params, ref IDataReader dataReader)
+        {
+            SqlCommand sqlCmd = (SqlCommand)CreateCommand(procName, @params);
+            dataReader = sqlCmd.ExecuteReader(CommandBehavior.CloseConnection);
+        }
+        public void ExecuteProc(string procName, ref DataTable dataSetObject)
+        {
+            SqlCommand sqlCmd = (SqlCommand)CreateCommand(procName, null);
+            SqlDataAdapter dtAdapter = new SqlDataAdapter(sqlCmd);
+            DataTable dtSetObject = new DataTable();
+            dtAdapter.Fill(dtSetObject);
+            dataSetObject = dtSetObject;
+            sqlCmd.Dispose();
+            this.Dispose();
+        }
+        public void Dispose()
+        {
+            if (!(System.Convert.IsDBNull(sqlConn)))
+            {
+                sqlConn.Dispose();
+                sqlConn = null;
+            }
+        }
+
+        public void Close()
+        {
+            if (!(System.Convert.IsDBNull(sqlConn)))
+            {
+                sqlConn.Close();
+            }
+        }
+        #endregion
+
         public async Task<IEnumerable<Common.ItemTypeMaster>> GetItemTypeAsync(int ItemTypeId)
         {
 
@@ -261,16 +392,59 @@ namespace DPWebAPI.Models
 
         }
 
-        public async Task<IEnumerable<Common.WebOrderToSo>> GetPendingwebOrderForSOAsync()
+        public async Task<string> GetPendingwebOrderForSOAsync()
         {
+            
+            DataSet ds=new DataSet();
+            ExecuteProc("GetPendingwebOrderForSO", ref ds);
+            string data = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            //var wotosoDetails = JsonConvert.DeserializeObject<IEnumerable<IActionResult>>(data);
+            return data;
 
+
+        }
+        public async Task<IEnumerable<Common.ErrorMessage>> ConvertWOTOSOAsync(string TableName, string xml)
+        {
+            List<Common.ErrorMessage> msg = new List<Common.ErrorMessage>();
+
+            // IEnumerable<Common.ErrorMessage> enumerable = (IEnumerable<Common.ErrorMessage>)msg;
+
+
+            var param = new SqlParameter[] {
+            new SqlParameter() {
+             ParameterName = "@TableName",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = TableName
+            },
+            new SqlParameter() {
+             ParameterName = "@xml",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = xml
+            },
+            new SqlParameter() {
+             ParameterName = "@ErroOut",
+             SqlDbType =  System.Data.SqlDbType.Int,
+             Direction = System.Data.ParameterDirection.Output,
+            },
+            new SqlParameter() {
+             ParameterName = "@ErrMsg",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Output,
+             Size = 50
+            }};
+
+
+
+            var sql = "exec SPConvertWOTOSOForJDP @TableName,@xml,@ErroOut OUT,@ErrMsg OUT";
+            var resultObj = _dbContext.Database.ExecuteSqlRaw(sql, param.ToArray());
 
            
 
-            var wotosoDetails = await Task.Run(() => _dbContext.wotosoDetails
-                            .FromSqlRaw(@"exec GetPendingwebOrderForSO").ToListAsync());
+            msg.Add(new Common.ErrorMessage { ErrorId = Convert.ToInt32(param[2].Value.ToString()), ErrorMsg = param[3].Value.ToString() });
 
-            return wotosoDetails;
+            return msg;
 
 
         }

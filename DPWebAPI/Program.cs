@@ -12,8 +12,8 @@ if(builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName ==
     var RazorCompile = builder.Services.AddRazorPages();
     RazorCompile.AddRazorRuntimeCompilation();
 }
-//builder.Services.AddDbContext<ApplicationDBContext>(optionsAction: options =>
-//options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDBContext>(optionsAction: options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUserDetails, UserService>();
 builder.Services.AddScoped<ILoginDetails, LoginDetails>();
 builder.Services.AddScoped<IReportDetails, ReportDetails>();

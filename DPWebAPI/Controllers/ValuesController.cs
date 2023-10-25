@@ -304,7 +304,7 @@ namespace DPWebAPI.Controllers
         public async Task<IActionResult> GetPendingwebOrderForSO()
         {
 
-            IEnumerable<Common.WebOrderToSo> result = null;
+            string result = null;
             var jsonData = new object();
             try
             {
@@ -313,6 +313,32 @@ namespace DPWebAPI.Controllers
             }
             catch (Exception ex)
             {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+        [HttpPost("ConvertWOTOSO")]
+        //[Route("AjaxMethod")]
+        [Consumes("application/xml", "application/json")]
+        [Produces("application/xml", "application/json")]
+        //[EnableCors("AllowAllHeaders")]
+        //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)
+        public async Task<IActionResult> ConvertWOTOSO(string TableName, [FromBody] XElement xml)
+        {
+
+            IEnumerable<Common.ErrorMessage> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.ConvertWOTOSOAsync(TableName, xml.ToString());
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
 
                 jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
 

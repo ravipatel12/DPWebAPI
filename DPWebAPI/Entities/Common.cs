@@ -183,10 +183,21 @@ namespace DPWebAPI.Entities
             public string? Remarks { get; set; }
             public int FactoryId { get; set; }
             public string? OrderRemark { get; set; }
+            public string? ProjectName { get; set; }
+            public decimal Qty { get; set;}
+           
+
+
+            
             
 
         }
-
+        public class Factory
+        {
+            public int FactoryID { get; set; }
+            public string? FactoryName { get; set;}
+            
+        }
     }
     
 }
