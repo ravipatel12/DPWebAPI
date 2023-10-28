@@ -140,6 +140,7 @@ namespace DPWebAPI.Entities
             public string? Series { get; set; }
             public string? UOM { get; set; }
             public decimal Qty { get; set; }
+            public decimal OrderValue { get; set;}
 
         }
         public class ErrorMessage

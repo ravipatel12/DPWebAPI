@@ -325,7 +325,7 @@ namespace DPWebAPI.Controllers
         [Consumes("application/xml", "application/json")]
         [Produces("application/xml", "application/json")]
         //[EnableCors("AllowAllHeaders")]
-        //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)
+        //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)ConfirmOrder
         public async Task<IActionResult> ConvertWOTOSO(string TableName, [FromBody] XElement xml)
         {
 
