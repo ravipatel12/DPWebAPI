@@ -163,6 +163,9 @@ namespace DPWebAPI.Entities
             public string? Remark { get; set; }
             public string? OrderRemark { get; set; }
             public decimal Rate { get; set; }
+            public int Qty { get; set; }
+            public decimal Value { get; set; }
+
         }
 
         public class WebOrderToSo
@@ -193,6 +196,11 @@ namespace DPWebAPI.Entities
             
 
         }
+
+        /// <summary>
+        /// public class
+        /// </summary>
+
         public class Factory
         {
             public int FactoryID { get; set; }

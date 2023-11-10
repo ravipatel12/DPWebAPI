@@ -8,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using DPWebAPI.DBContexts;
 using DPWebAPI.Entities;
 using DPWebAPI.Repositories;
-
-
 using System.Collections;
 using System.Net;
 using System.Runtime.Serialization;

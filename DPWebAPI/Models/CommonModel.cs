@@ -400,8 +400,6 @@ namespace DPWebAPI.Models
             string data = JsonConvert.SerializeObject(ds, Formatting.Indented);
             //var wotosoDetails = JsonConvert.DeserializeObject<IEnumerable<IActionResult>>(data);
             return data;
-
-
         }
         public async Task<IEnumerable<Common.ErrorMessage>> ConvertWOTOSOAsync(string TableName, string xml)
         {
