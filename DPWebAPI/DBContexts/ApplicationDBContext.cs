@@ -37,6 +37,7 @@ namespace DPWebAPI.DBContexts
         public DbSet<Common.LoginDetails> LoginDetail { get; set; }
         public DbSet<Common.WebOrderHistoryReport> WebOrderReport { get; set; }
         public DbSet<Common.ItemTypeMaster> ItemType { get; set; }
+        public DbSet<Common.DispatchSummary> Dispatchs { get; set; }
         public DbSet<Common.PartyMaster> PartyDetails { get; set; }
         public DbSet<Common.ItemMasterForPlaceOrder> ItemDetailsForPO { get; set; }
         public DbSet<Common.ItemMaster> ItemDetails { get; set; }

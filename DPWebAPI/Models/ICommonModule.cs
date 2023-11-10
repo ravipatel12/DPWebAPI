@@ -18,7 +18,7 @@ namespace DPWebAPI.Models
         public Task<IEnumerable<Common.WebOrderConfirm>> ConfirmOrderAsync(string OrderRemark,string TableName, string xml);
         public Task<string> GetPendingwebOrderForSOAsync();
         public Task<IEnumerable<Common.ErrorMessage>> ConvertWOTOSOAsync(string TableName, string xml);
-
-
+        
+        public Task<IEnumerable<Common.DispatchSummary>> GetDispatchSummaryAsync(DateTime FromDate, DateTime Todate, string PartyIDs, int ReportType, int UserID, int PartyID);
     }
 }

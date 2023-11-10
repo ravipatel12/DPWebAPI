@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Threading;
 using Newtonsoft.Json;
+using static DPWebAPI.Entities.Common;
 
 namespace DPWebAPI.Models
 {
@@ -446,6 +447,27 @@ namespace DPWebAPI.Models
 
 
         }
+
+        public async Task<IEnumerable<Common.DispatchSummary>> GetDispatchSummaryAsync(DateTime FromDate, DateTime Todate, string PartyIDs, int ReportType, int UserID, int PartyID)
+        {
+
+
+            var param = new List<SqlParameter>();
+            param.Add(new SqlParameter("@FromDate", FromDate));
+            param.Add(new SqlParameter("@ToDate", Todate));
+            param.Add(new SqlParameter("@PartyIDs", PartyIDs));
+            param.Add(new SqlParameter("@ReportType", ReportType));
+            param.Add(new SqlParameter("@UserID", UserID));
+            param.Add(new SqlParameter("@PartyID", PartyID));
+
+
+            var Dispatch = await Task.Run(() => _dbContext.Dispatchs
+                            .FromSqlRaw(@"exec DPDispatchDetails @FromDate,@ToDate,@PartyIDs,@ReportType, @UserID,@PartyID", param.ToArray()).ToListAsync());
+
+            return Dispatch;
+
+
+        }
     }
-    
+
 }
