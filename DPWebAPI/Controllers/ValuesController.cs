@@ -27,7 +27,7 @@ namespace DPWebAPI.Controllers
         private readonly ILoginDetails loginService;
         private readonly IReportDetails ReportService;
         private readonly ICommonModule CommonModule;
-        public ValuesController(ILoginDetails loginService,IReportDetails reportDetails, ICommonModule commonModule)
+        public ValuesController(ILoginDetails loginService, IReportDetails reportDetails, ICommonModule commonModule)
         {
             this.loginService = loginService;
             this.ReportService = reportDetails;
@@ -35,19 +35,19 @@ namespace DPWebAPI.Controllers
         }
 
         [HttpGet("GetLoginDetails")]
-        public async Task<IActionResult> GetLoginDetails(string UserName,string Password)
+        public async Task<IActionResult> GetLoginDetails(string UserName, string Password)
         {
-           
-            IEnumerable<Common.LoginDetails> result=null;
+
+            IEnumerable<Common.LoginDetails> result = null;
             var jsonData = new object();
             try
             {
-                result = await loginService.GetLoginDetailsAsync(UserName,Password);
+                result = await loginService.GetLoginDetailsAsync(UserName, Password);
                 jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
                 jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
 
             }
@@ -160,6 +160,8 @@ namespace DPWebAPI.Controllers
 
             return new JsonResult(jsonData);
         }
+
+
         [HttpGet("GetItem")]
         public async Task<IActionResult> GetItem()
         {
@@ -186,14 +188,14 @@ namespace DPWebAPI.Controllers
         [Produces("application/xml", "application/json")]
         //[EnableCors("AllowAllHeaders")]
         //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)
-        public async Task<IActionResult> SaveOrder(string TableName,[FromBody] XElement xml)
+        public async Task<IActionResult> SaveOrder(string TableName, [FromBody] XElement xml)
         {
 
             IEnumerable<Common.ErrorMessage> result = null;
             var jsonData = new object();
             try
             {
-                result = await CommonModule.SaveOrderAsync(TableName,xml.ToString());
+                result = await CommonModule.SaveOrderAsync(TableName, xml.ToString());
                 jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
             }
             catch (Exception ex)
@@ -285,7 +287,7 @@ namespace DPWebAPI.Controllers
             var jsonData = new object();
             try
             {
-                result = await CommonModule.ConfirmOrderAsync(OrderRemark,TableName, xml.ToString());
+                result = await CommonModule.ConfirmOrderAsync(OrderRemark, TableName, xml.ToString());
                 jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
             }
             catch (Exception ex)
@@ -343,6 +345,27 @@ namespace DPWebAPI.Controllers
             }
 
             return new JsonResult(jsonData);
+        }
+        [HttpGet("GetDispatchSummary")]
+        public async Task<IActionResult> GetDispatchSummary(DateTime FromDate, DateTime Todate, string PartyIDs, int ReportType, int UserID, int PartyID)
+        {
+
+            IEnumerable<Common.DispatchSummary> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetDispatchSummaryAsync(FromDate, Todate, PartyIDs, ReportType, UserID, PartyID);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+
         }
     }
 }
