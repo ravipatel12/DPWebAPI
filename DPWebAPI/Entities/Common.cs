@@ -199,6 +199,33 @@ namespace DPWebAPI.Entities
             public string? FactoryName { get; set;}
             
         }
+
+        public class DispatchSummary
+        {
+            [Key]
+            public string? InvoiceNo { get; set; }
+            public DateTime InvoiceDate { get; set; }
+            public string? ClientCode { get; set; }
+            public string? ClientName { get; set; }
+            public string? ClientGST { get; set; }
+            public string? City { get; set; }
+            public string? State { get; set; }
+            public int Boxes { get; set; }
+            public decimal DispatchQuantity { get; set; }
+            public decimal TaxableAmount { get; set; }
+            public decimal GSTAmount { get; set; }
+            public decimal TCS { get; set; }
+            public decimal InvoiceAmount { get; set; }
+            public string? lrno { get; set; }
+            public string? lrdate { get; set; }
+            public string? Transporter { get; set; }
+            public string? vehicleno { get; set; }
+            public string? EwayBillNo { get; set; }
+            public string? EwayBillDate { get; set; }
+            public string? OrderDetails { get; set; }
+
+            
+        }
     }
     
 }
