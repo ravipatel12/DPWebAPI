@@ -270,11 +270,11 @@ namespace DPWebAPI.Controllers
             {
 
 
-                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message }; ;
 
             }
 
-            return new JsonResult(jsonData);
+            return new JsonResult(jsonData); 
         }
         [HttpPost("ConfirmOrder")]
         //[Route("AjaxMethod")]
