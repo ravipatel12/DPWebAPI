@@ -450,7 +450,7 @@ namespace DPWebAPI.Models
 
         }
 
-        public async Task<IEnumerable<Common.DispatchSummary>> GetDispatchSummaryAsync(DateTime FromDate, DateTime Todate, string PartyIDs, int ReportType, int UserID, int PartyID)
+        public async Task<IEnumerable<Common.DispatchSummary>> GetDispatchSummaryAsync(string FromDate, string Todate, string PartyIDs, int ReportType, int UserID, int PartyID)
         {
 
 

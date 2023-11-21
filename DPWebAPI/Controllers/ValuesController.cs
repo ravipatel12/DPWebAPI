@@ -349,7 +349,7 @@ namespace DPWebAPI.Controllers
             return new JsonResult(jsonData);
         }
         [HttpGet("GetDispatchSummary")]
-        public async Task<IActionResult> GetDispatchSummary(DateTime FromDate, DateTime Todate, string PartyIDs, int ReportType, int UserID, int PartyID)
+        public async Task<IActionResult> GetDispatchSummary(string FromDate, string Todate, string PartyIDs, int ReportType, int UserID, int PartyID)
         {
 
             IEnumerable<Common.DispatchSummary> result = null;
