@@ -204,7 +204,7 @@ namespace DPWebAPI.Entities
         {
             [Key]
             public string? InvoiceNo { get; set; }
-            public DateTime InvoiceDate { get; set; }
+            public string? InvoiceDate { get; set; }
             public string? ClientCode { get; set; }
             public string? ClientName { get; set; }
             public string? ClientGST { get; set; }
