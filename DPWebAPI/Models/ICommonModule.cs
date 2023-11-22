@@ -20,5 +20,7 @@ namespace DPWebAPI.Models
         public Task<IEnumerable<Common.ErrorMessage>> ConvertWOTOSOAsync(string TableName, string xml);
         
         public Task<IEnumerable<Common.DispatchSummary>> GetDispatchSummaryAsync(string FromDate, string ToDate, string PartyIDs, int ReportType, int UserID, int PartyID);
+
+        public Task<IEnumerable<Common.DispatchDetails>> GetDispatchDetailAsync(string FromDate, string ToDate, string PartyIDs, int ReportType, int UserID, int PartyID);
     }
 }
