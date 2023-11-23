@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DPWebAPI.Entities
 {
-    
+
     public class Common
     {
         [Key]
@@ -39,7 +39,7 @@ namespace DPWebAPI.Entities
         }
         public class WebOrderHistoryReport
         {
-            
+
             public string WebOrderNo { get; set; }
             public string WebOrderDate { get; set; }
             public int SalesOrderID { get; set; }
@@ -51,7 +51,7 @@ namespace DPWebAPI.Entities
             public decimal PackingSize { get; set; }
             public decimal OrderQty { get; set; }
             public decimal DispatchQty { get; set; }
-            public  string? Status { get; set; }
+            public string? Status { get; set; }
             public string Party { get; set; }
 
 
@@ -106,17 +106,17 @@ namespace DPWebAPI.Entities
             public string ItemCode { get; set; }
             public string OurCode { get; set; }
             public string OurName { get; set; }
-           
+
         }
         public class MailerData
         {
-            
+
             public string? MailFrom { get; set; }
-            public string?NewTmp { get; set; }
-            public string?MailCC { get; set; }
-            public string?MailBCC { get; set; }
-            public string?MailServer { get; set; }
-            public string?MailUserName { get; set; }
+            public string? NewTmp { get; set; }
+            public string? MailCC { get; set; }
+            public string? MailBCC { get; set; }
+            public string? MailServer { get; set; }
+            public string? MailUserName { get; set; }
             public int? MailPort { get; set; }
             public string? CommToMailId { get; set; }
             public bool? SSL { get; set; }
@@ -140,7 +140,7 @@ namespace DPWebAPI.Entities
             public string? Series { get; set; }
             public string? UOM { get; set; }
             public decimal Qty { get; set; }
-            public decimal OrderValue { get; set;}
+            public decimal OrderValue { get; set; }
 
         }
         public class ErrorMessage
@@ -185,19 +185,19 @@ namespace DPWebAPI.Entities
             public int FactoryId { get; set; }
             public string? OrderRemark { get; set; }
             public string? ProjectName { get; set; }
-            public decimal Qty { get; set;}
-           
+            public decimal Qty { get; set; }
 
 
-            
-            
+
+
+
 
         }
         public class Factory
         {
             public int FactoryID { get; set; }
-            public string? FactoryName { get; set;}
-            
+            public string? FactoryName { get; set; }
+
         }
 
         public class DispatchSummary
@@ -224,8 +224,26 @@ namespace DPWebAPI.Entities
             public string? EwayBillDate { get; set; }
             public string? OrderDetails { get; set; }
 
-            
+
+        }
+        public class AccountsLedgerDetails
+        {
+
+            public string? MainParty { get; set; }
+            public string? VoucherNo { get; set; }
+            public string? PartyCode { get; set; }
+            public string? Party { get; set; }
+            public string? VoucherType { get; set; }
+            public string? VoucherDate { get; set; }
+            public decimal Debit { get; set; }
+            public decimal Credit { get; set; }
+            public string? Narration { get; set; }
+            public string? Balance { get; set; }
+            public string? RefNo { get; set; }
+            public string? RefDate { get; set; }
+           
+
         }
     }
-    
+
 }

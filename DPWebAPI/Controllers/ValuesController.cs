@@ -270,7 +270,7 @@ namespace DPWebAPI.Controllers
             {
 
 
-                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message }; ;
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message }; 
 
             }
 
@@ -357,6 +357,28 @@ namespace DPWebAPI.Controllers
             try
             {
                 result = await CommonModule.GetDispatchSummaryAsync(FromDate, Todate, PartyIDs, ReportType, UserID, PartyID);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+
+        }
+
+        [HttpGet("GetAccountsLedgerDetails")]
+        public async Task<IActionResult> GetAccountsLedgerDetails(int CompanyID, string FactoryId, DateTime FromDate, DateTime Todate, int PartyID)
+        {
+
+            IEnumerable<Common.AccountsLedgerDetails> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GeAccountsLedgerDetailsAsync(CompanyID,FactoryId,FromDate,Todate,PartyID);
                 jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
             }
             catch (Exception ex)
