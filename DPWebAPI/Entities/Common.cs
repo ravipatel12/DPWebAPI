@@ -204,7 +204,7 @@ namespace DPWebAPI.Entities
         {
             [Key]
             public string? InvoiceNo { get; set; }
-            public DateTime InvoiceDate { get; set; }
+            public string? InvoiceDate { get; set; }
             public string? ClientCode { get; set; }
             public string? ClientName { get; set; }
             public string? ClientGST { get; set; }
@@ -242,6 +242,34 @@ namespace DPWebAPI.Entities
             public string? RefNo { get; set; }
             public string? RefDate { get; set; }
            
+
+        }
+
+        public class DispatchDetails
+        {
+            [Key]
+            public string? InvoiceNo { get; set; }
+            public string? InvoiceDate { get; set; }
+            public string? ClientCode { get; set; }
+            public string? ClientName { get; set; }
+            public string? ClientOrder { get; set; }
+            public string? OrderDate { get; set; }
+            public string? SalesOrderNo { get; set; }
+            public string? MainCategory { get; set; }
+            public string? ParentCategory { get; set; }
+            public string? Category { get; set; }
+            public string? SubCategory { get; set; }
+            public string? ItemType { get; set; }
+            public string? ItemCode { get; set; }
+            public string? ItemName { get; set; }
+            public string? UOM { get; set; }
+            public decimal DispatchQuantity { get; set; }
+            public decimal BasicRate { get; set; }
+            public decimal Rate { get; set; }
+            public decimal TaxableAmount { get; set; }
+            public decimal GSTAmount { get; set; }
+            public decimal TotalItemValue { get; set; }
+
 
         }
     }
