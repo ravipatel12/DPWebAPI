@@ -24,7 +24,7 @@ namespace DPWebAPI.Repositories
             
 
             var WebOrderReport = await Task.Run(() => _dbContext.WebOrderReport
-                            .FromSqlRaw(@"exec DPGetOrderHistory @XMLParam", param.ToArray()).ToListAsync());
+                            .FromSqlRaw(@"exec DPOrderHistory @XMLParam", param.ToArray()).ToListAsync());
 
             return WebOrderReport;
 
