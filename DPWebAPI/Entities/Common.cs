@@ -39,19 +39,19 @@ namespace DPWebAPI.Entities
         }
         public class WebOrderHistoryReport
         {
-
+            
             public string WebOrderNo { get; set; }
             public string WebOrderDate { get; set; }
-            public int SalesOrderID { get; set; }
             public string POExpiryDate { get; set; }
             public string SchDate { get; set; }
             public string RevSchDate { get; set; }
             public string ItemName { get; set; }
             public string ItemCode { get; set; }
+            public string UOM { get; set; }
             public decimal PackingSize { get; set; }
             public decimal OrderQty { get; set; }
             public decimal DispatchQty { get; set; }
-            public string? Status { get; set; }
+            public  string? Status { get; set; }
             public string Party { get; set; }
 
 
