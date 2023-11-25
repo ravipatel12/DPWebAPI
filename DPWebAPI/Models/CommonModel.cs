@@ -471,6 +471,28 @@ namespace DPWebAPI.Models
 
         }
 
+        public async Task<IEnumerable<Common.AccountsLedgerDetails>> GeAccountsLedgerDetailsAsync(int CompanyID, string FactoryId, DateTime FromDate, DateTime Todate, int PartyID)
+        {
+
+
+            var param = new List<SqlParameter>();
+            param.Add(new SqlParameter("@CompanyID", CompanyID));
+            param.Add(new SqlParameter("@FactoryID", FactoryId));
+            param.Add(new SqlParameter("@FromDate", FromDate));
+            param.Add(new SqlParameter("@ToDate", Todate));
+            param.Add(new SqlParameter("@PartyID", PartyID));
+           
+
+
+            var LegderDetails = await Task.Run(() => _dbContext.LegderDetails
+                            .FromSqlRaw(@"exec sp_GetMultipleLedgerDP @CompanyID,@FactoryID,@FromDate,@ToDate,@PartyID", param.ToArray())
+                            .ToListAsync());
+
+            return LegderDetails;
+
+
+        }
+
         public async Task<IEnumerable<Common.DispatchDetails>> GetDispatchDetailAsync(string FromDate, string Todate, string PartyIDs, int ReportType, int UserID, int PartyID)
         {
 
