@@ -410,5 +410,24 @@ namespace DPWebAPI.Controllers
             return new JsonResult(jsonData);
 
         }
+
+        [HttpGet("GetCompany")]
+        public async Task<IActionResult> GetCompany(int UserID)
+        {
+
+            IEnumerable<Common.ComapanyMaster> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetComapanyMasterAsync(UserID);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+            }
+
+            return new JsonResult(jsonData);
+        }
     }
 }

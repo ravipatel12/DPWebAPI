@@ -282,6 +282,12 @@ namespace DPWebAPI.Entities
 
 
         }
+
+        public class ComapanyMaster
+        {
+            public string? Company { get; set; }
+            public int CompanyID { get; set; }
+        }
     }
 
 }

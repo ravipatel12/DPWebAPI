@@ -511,6 +511,17 @@ namespace DPWebAPI.Models
 
 
         }
+
+        public async Task<IEnumerable<Common.ComapanyMaster>> GetComapanyMasterAsync(int UserID)
+        {
+            var param = new List<SqlParameter>();
+            param.Add(new SqlParameter("@pUserID", UserID));
+
+            var Company = await Task.Run(() => _dbContext.Company
+                            .FromSqlRaw(@"exec GetDPCompany @pUserID", param.ToArray()).ToListAsync());
+
+            return Company;
+        }
     }
 
 }

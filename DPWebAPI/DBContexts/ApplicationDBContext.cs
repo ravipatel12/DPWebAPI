@@ -34,6 +34,10 @@ namespace DPWebAPI.DBContexts
             modelBuilder.Entity<Common.AccountsLedgerDetails>()
                 .HasNoKey()
                 .ToView("AccountsLedgerDetailsView");
+            modelBuilder.Entity<Common.ComapanyMaster>()
+                .HasNoKey()
+                .ToView("ComapanyMasterView");
+
         }
 
         public DbSet<Common.UserDetails> UserDetail { get; set; }
@@ -52,5 +56,6 @@ namespace DPWebAPI.DBContexts
         public DbSet<Common.WebOrderToSo> wotosoDetails { get; set; }
         public DbSet<DPWebAPI.Entities.Common>? Common { get; set; }
         public DbSet<Common.AccountsLedgerDetails> LegderDetails { get; set; }
+        public DbSet<Common.ComapanyMaster> Company { get; set; }
     }
 }
