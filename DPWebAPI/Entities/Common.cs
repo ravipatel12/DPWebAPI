@@ -41,6 +41,7 @@ namespace DPWebAPI.Entities
         {
 
             public string Client { get; set; }
+            public int WebOrderID { get; set; }
             public string WebOrderNo { get; set; }
             public string WebOrderDate { get; set; }
             public string POExpiryDate { get; set; }
