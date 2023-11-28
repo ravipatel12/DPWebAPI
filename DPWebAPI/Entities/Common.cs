@@ -55,6 +55,7 @@ namespace DPWebAPI.Entities
             public decimal DispatchQty { get; set; }
             public string? Status { get; set; }
             public string? SalesOrderNo { get; set; }
+            public string DispatchDetails { get; set; }
 
 
         }
