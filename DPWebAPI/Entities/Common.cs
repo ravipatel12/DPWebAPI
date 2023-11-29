@@ -2,6 +2,7 @@
 using DPWebAPI.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DPWebAPI.Entities
@@ -243,7 +244,7 @@ namespace DPWebAPI.Entities
             public string? Balance { get; set; }
             public string? RefNo { get; set; }
             public string? RefDate { get; set; }
-           
+
 
         }
 
@@ -280,6 +281,52 @@ namespace DPWebAPI.Entities
             public string? Company { get; set; }
             public int CompanyID { get; set; }
         }
+
+        public class AccountsOutstandingSummary
+        {
+            public string? Partycode { get; set; }
+            public string? PartyName { get; set; }
+            public string? City { get; set; }
+            public string? State { get; set; }
+            public int MasterCreditDays { get; set; }
+            public decimal NetAmount { get; set; }
+            public decimal OtherCharge { get; set; }
+            public decimal TaxAmount { get; set; }
+            public decimal DocAmount { get; set; }
+            public decimal AdjustedAmount { get; set; }
+            public decimal OutstandingAmount { get; set; }
+            public decimal UPTO30DAYS { get; set; }
+            public decimal DAYS31TO60 { get; set; }
+            public decimal DAYS61TO90 { get; set; }
+            public decimal DAYS91TO120 { get; set; }
+            public decimal DAYS121TO150 { get; set; }
+            public decimal ABOVE151DAYS { get; set; }
+            public decimal Advance { get; set; }
+            public decimal LedgerBalance { get; set; }
+
+        }
+
+        public class AccountsOutstandingDetails
+        {
+            public string? DocType { get; set; }
+            public string? Docid { get; set; }
+            public string? DocumentDate { get; set; }
+            public string? Adjustment { get; set; }
+            public int DocumentCreditDays { get; set; }
+            public int MasterCreditDays { get; set; }
+            public DateTime Duedate { get; set; }
+            public decimal Docamount { get; set; }
+            public decimal AdjuestedAmount { get; set; }
+            public decimal outstandingamount { get; set; }
+            public int DueDays { get; set; }
+            public decimal UPTO30DAYS { get; set; }
+            public decimal DAYS31TO60 { get; set; }
+            public decimal DAYS61TO90 { get; set; }
+            public decimal DAYS91TO120 { get; set; }
+            public decimal DAYS121TO150 { get; set; }
+            public decimal ABOVE151DAYS { get; set; }
+        }
+        
     }
 
 }
