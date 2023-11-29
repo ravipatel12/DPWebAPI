@@ -26,6 +26,7 @@ namespace DPWebAPI.Models
 
         public Task<IEnumerable<Common.ComapanyMaster>> GetComapanyMasterAsync(int UserId);
 
-        public Task<IEnumerable<Common.AccountsOutstandingDetails>> GetAccountsOutstandingDetailsAsync(int UserId);
+        public Task<IEnumerable<Common.AccountsOutstandingSummary>> GetAccountsOutstandingSummariesAsync(int CompanyID,int ReportType,DateTime ToDate,int PartyId);
+        public Task<IEnumerable<Common.AccountsOutstandingDetails>> GetAccountsOutstandingDetailsAsync(int CompanyID, int ReportType, DateTime ToDate, int PartyId);
     }
 }
