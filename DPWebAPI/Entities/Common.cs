@@ -315,7 +315,7 @@ namespace DPWebAPI.Entities
             public string? Adjustment { get; set; }
             public int DocumentCreditDays { get; set; }
             public int MasterCreditDays { get; set; }
-            public DateTime Duedate { get; set; }
+            public string? Duedate { get; set; }
             public decimal Docamount { get; set; }
             public decimal AdjuestedAmount { get; set; }
             public decimal outstandingamount { get; set; }
