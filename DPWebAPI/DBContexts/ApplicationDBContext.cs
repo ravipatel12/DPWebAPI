@@ -37,7 +37,12 @@ namespace DPWebAPI.DBContexts
             modelBuilder.Entity<Common.ComapanyMaster>()
                 .HasNoKey()
                 .ToView("ComapanyMasterView");
-
+            modelBuilder.Entity<Common.AccountsOutstandingDetails>()
+              .HasNoKey()
+              .ToView("AccountsOutstandingDetailsView");
+            modelBuilder.Entity<Common.AccountsOutstandingSummary>()
+              .HasNoKey()
+              .ToView("AccountsOutstandingSummaryView");
         }
 
         public DbSet<Common.UserDetails> UserDetail { get; set; }
@@ -57,5 +62,7 @@ namespace DPWebAPI.DBContexts
         public DbSet<DPWebAPI.Entities.Common>? Common { get; set; }
         public DbSet<Common.AccountsLedgerDetails> LegderDetails { get; set; }
         public DbSet<Common.ComapanyMaster> Company { get; set; }
+        public DbSet<Common.AccountsOutstandingSummary> OutstandingS { get; set; }
+        public DbSet<Common.AccountsOutstandingDetails> OutstandingD { get; set; }
     }
 }

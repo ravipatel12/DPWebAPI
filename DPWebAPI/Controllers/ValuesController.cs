@@ -429,5 +429,47 @@ namespace DPWebAPI.Controllers
 
             return new JsonResult(jsonData);
         }
+
+        [HttpGet("GetAccountsOutstandingSummary")]
+        public async Task<IActionResult> GetAccountsOutstandingSummary(int CompanyID, int ReportType, DateTime ToDate, int PartyId)
+        {
+
+            IEnumerable<Common.AccountsOutstandingSummary> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetAccountsOutstandingSummariesAsync(CompanyID, ReportType, ToDate, PartyId);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+
+        [HttpGet("GetAccountsOutstandingDetails")]
+        public async Task<IActionResult> GetAccountsOutstandingDetails(int CompanyID, int ReportType, DateTime ToDate, int PartyId)
+        {
+
+            IEnumerable<Common.AccountsOutstandingDetails> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetAccountsOutstandingDetailsAsync(CompanyID, ReportType, ToDate, PartyId);
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
     }
 }

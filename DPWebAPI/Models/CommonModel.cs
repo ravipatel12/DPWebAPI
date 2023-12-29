@@ -522,6 +522,46 @@ namespace DPWebAPI.Models
 
             return Company;
         }
+
+        public async Task<IEnumerable<Common.AccountsOutstandingSummary>> GetAccountsOutstandingSummariesAsync(int CompanyID, int ReportType, DateTime ToDate, int PartyId)
+        {
+
+
+            var param = new List<SqlParameter>();
+            param.Add(new SqlParameter("@CompanyID", CompanyID));
+            param.Add(new SqlParameter("@ReportType", ReportType));
+            param.Add(new SqlParameter("@ToDate", ToDate));
+            param.Add(new SqlParameter("@PartyId", PartyId));
+
+
+
+            var OutstandingS = await Task.Run(() => _dbContext.OutstandingS
+                            .FromSqlRaw(@"exec DPGetAccountsOutstanding @CompanyID,@ReportType,@ToDate,@PartyId", param.ToArray())
+                            .ToListAsync());
+
+            return OutstandingS;
+        }
+
+        public async Task<IEnumerable<Common.AccountsOutstandingDetails>> GetAccountsOutstandingDetailsAsync(int CompanyID, int ReportType, DateTime ToDate, int PartyId)
+        {
+
+
+            var param = new List<SqlParameter>();
+            param.Add(new SqlParameter("@CompanyID", CompanyID));
+            param.Add(new SqlParameter("@ReportType", ReportType));
+            param.Add(new SqlParameter("@ToDate", ToDate));
+            param.Add(new SqlParameter("@PartyId", PartyId));
+
+
+
+            var OutstandingD = await Task.Run(() => _dbContext.OutstandingD
+                            .FromSqlRaw(@"exec DPGetAccountsOutstanding @CompanyID,@ReportType,@ToDate,@PartyId", param.ToArray())
+                            .ToListAsync());
+
+            return OutstandingD;
+        }
+
+        
     }
 
 }
