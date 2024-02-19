@@ -33,6 +33,7 @@ namespace DPWebAPI.Entities
             public DateTime PasswordExpiryDate { get; set; }
             public string LastLoginTime { get; set; }
             public bool Agent { get; set; }
+            public bool IsAdmin { get; set; }
 
 
 

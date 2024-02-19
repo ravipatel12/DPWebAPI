@@ -8,7 +8,7 @@ namespace DPWebAPI.Models
     {
         public Task<IEnumerable<Common.ItemTypeMaster>> GetItemTypeAsync(int ItemTypeId);
         public Task<IEnumerable<Common.ItemTypeMaster>> GetItemTypeWithChildAsync(int ItemTypeId);
-        public Task<IEnumerable<Common.PartyMaster>> GetPartyAsync(int SalesPersonId,int AgentId,int DealerPartyId);
+        public Task<IEnumerable<Common.PartyMaster>> GetPartyAsync(int SalesPersonId,int AgentId,int DealerPartyId,bool IsAdmin);
         public Task<IEnumerable<Common.ItemMasterForPlaceOrder>> GetItemForPlaceOrderAsync(int PartyId, int Item1Type, int Item2Type, int Item3Type, int Item4Type,int SerchableItemId);
         public Task<IEnumerable<Common.ItemMaster>> GetItemAsync();
         public Task<IEnumerable<Common.ErrorMessage>> SaveOrderAsync(string TableName, string xml);
