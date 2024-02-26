@@ -57,6 +57,7 @@ namespace DPWebAPI.Entities
             public decimal DispatchQty { get; set; }
             public decimal CancelQty { get; set; }
             public decimal BalanceQty { get; set; }
+            public decimal WOQty { get; set; }
             public string? Status { get; set; }
             public string? SalesOrderNo { get; set; }
             public string? Remarks { get; set; }
@@ -263,7 +264,7 @@ namespace DPWebAPI.Entities
 
         public class DispatchDetails
         {
-            [Key]
+            
             public string? InvoiceNo { get; set; }
             public string? InvoiceDate { get; set; }
             public string? ClientCode { get; set; }
