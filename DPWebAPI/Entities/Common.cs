@@ -269,11 +269,23 @@ namespace DPWebAPI.Entities
             public string? UOM { get; set; }
             public decimal DispatchQuantity { get; set; }
             public decimal BasicRate { get; set; }
+
+            public decimal disc1Per { get; set; }
+            public decimal Disc2Per { get; set; }
+            public decimal Disc3Per { get; set; }
+            public decimal Disc4Per { get; set; }
+            public decimal SchemePer { get; set; }
+
+            public decimal Discount1 { get; set; }
+            public decimal Discount2 { get; set; }
+            public decimal Discount3 { get; set; }
+            public decimal Discount4 { get; set; }
+            public decimal SchemeDiscount { get; set; }
+
             public decimal Rate { get; set; }
             public decimal TaxableAmount { get; set; }
             public decimal GSTAmount { get; set; }
             public decimal TotalItemValue { get; set; }
-
 
         }
 
@@ -318,7 +330,7 @@ namespace DPWebAPI.Entities
             public string? Duedate { get; set; }
             public decimal Docamount { get; set; }
             public decimal AdjuestedAmount { get; set; }
-            public decimal outstandingamount { get; set; }
+            public decimal OutstandingAmount { get; set; }
             public int DueDays { get; set; }
             public decimal UPTO30DAYS { get; set; }
             public decimal DAYS31TO60 { get; set; }
