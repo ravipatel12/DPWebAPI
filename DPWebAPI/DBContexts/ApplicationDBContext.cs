@@ -43,6 +43,9 @@ namespace DPWebAPI.DBContexts
             modelBuilder.Entity<Common.AccountsOutstandingSummary>()
               .HasNoKey()
               .ToView("AccountsOutstandingSummaryView");
+            modelBuilder.Entity<Common.DispatchDetails>()
+              .HasNoKey()
+              .ToView("DispatchDetailsView");
         }
 
         public DbSet<Common.UserDetails> UserDetail { get; set; }

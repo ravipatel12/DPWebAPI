@@ -33,6 +33,7 @@ namespace DPWebAPI.Entities
             public DateTime PasswordExpiryDate { get; set; }
             public string LastLoginTime { get; set; }
             public bool Agent { get; set; }
+            public bool IsAdmin { get; set; }
 
 
 
@@ -54,8 +55,12 @@ namespace DPWebAPI.Entities
             public decimal PackingSize { get; set; }
             public decimal OrderQty { get; set; }
             public decimal DispatchQty { get; set; }
+            public decimal CancelQty { get; set; }
+            public decimal BalanceQty { get; set; }
+            public decimal WOQty { get; set; }
             public string? Status { get; set; }
             public string? SalesOrderNo { get; set; }
+            public string? Remarks { get; set; }
             public string DispatchDetails { get; set; }
 
 
@@ -167,6 +172,9 @@ namespace DPWebAPI.Entities
             public string? Remark { get; set; }
             public string? OrderRemark { get; set; }
             public decimal Rate { get; set; }
+            public int Qty { get; set; }
+            public decimal Value { get; set; }
+
         }
 
         public class WebOrderToSo
@@ -197,6 +205,11 @@ namespace DPWebAPI.Entities
 
 
         }
+
+        /// <summary>
+        /// public class
+        /// </summary>
+
         public class Factory
         {
             public int FactoryID { get; set; }
@@ -251,7 +264,7 @@ namespace DPWebAPI.Entities
 
         public class DispatchDetails
         {
-            [Key]
+            
             public string? InvoiceNo { get; set; }
             public string? InvoiceDate { get; set; }
             public string? ClientCode { get; set; }

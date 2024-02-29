@@ -182,7 +182,7 @@ namespace DPWebAPI.Models
 
 
         }
-        public async Task<IEnumerable<Common.PartyMaster>> GetPartyAsync(int SalesPersonId, int AgentId, int DealerPartyId)
+        public async Task<IEnumerable<Common.PartyMaster>> GetPartyAsync(int SalesPersonId, int AgentId, int DealerPartyId, bool IsAdmin)
         {
 
 
@@ -190,10 +190,11 @@ namespace DPWebAPI.Models
             param.Add(new SqlParameter("@SalesPersonID", SalesPersonId));
             param.Add(new SqlParameter("@AgentID", AgentId));
             param.Add(new SqlParameter("@DealerPartyID", DealerPartyId));
+            param.Add(new SqlParameter("@IsAdmin", IsAdmin));
 
 
             var PartyMaster = await Task.Run(() => _dbContext.PartyDetails
-                            .FromSqlRaw(@"exec GetDPPartyList @SalesPersonID,@AgentID,@DealerPartyID", param.ToArray()).ToListAsync());
+                            .FromSqlRaw(@"exec GetDPPartyList @SalesPersonID,@AgentID,@DealerPartyID,@IsAdmin", param.ToArray()).ToListAsync());
 
             return PartyMaster;
 
@@ -401,8 +402,6 @@ namespace DPWebAPI.Models
             string data = JsonConvert.SerializeObject(ds, Formatting.Indented);
             //var wotosoDetails = JsonConvert.DeserializeObject<IEnumerable<IActionResult>>(data);
             return data;
-
-
         }
         public async Task<IEnumerable<Common.ErrorMessage>> ConvertWOTOSOAsync(string TableName, string xml)
         {

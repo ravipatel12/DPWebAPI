@@ -8,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using DPWebAPI.DBContexts;
 using DPWebAPI.Entities;
 using DPWebAPI.Repositories;
-
-
 using System.Collections;
 using System.Net;
 using System.Runtime.Serialization;
@@ -123,14 +121,14 @@ namespace DPWebAPI.Controllers
             return new JsonResult(jsonData);
         }
         [HttpGet("GetParty")]
-        public async Task<IActionResult> GetParty(int SalesPersonId, int AgentId, int DealerPartyId)
+        public async Task<IActionResult> GetParty(int SalesPersonId, int AgentId, int DealerPartyId,bool IsAdmin)
         {
 
             IEnumerable<Common.PartyMaster> result = null;
             var jsonData = new object();
             try
             {
-                result = await CommonModule.GetPartyAsync(SalesPersonId, AgentId, DealerPartyId);
+                result = await CommonModule.GetPartyAsync(SalesPersonId, AgentId, DealerPartyId, IsAdmin);
                 jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
             }
             catch (Exception ex)
