@@ -30,5 +30,20 @@ namespace DPWebAPI.Repositories
 
 
         }
+        public async Task<IEnumerable<Common.WebOrderHistorySummaryReport>> GetWebOrderHistorySummaryReportAsync([FromBody] string xml)
+        {
+
+
+            var param = new List<SqlParameter>();
+            param.Add(new SqlParameter("@XMLParam", xml));
+
+
+            var WebOrderSummaryReport = await Task.Run(() => _dbContext.WebOrderSummaryReport
+                            .FromSqlRaw(@"exec DPOrderHistory @XMLParam", param.ToArray()).ToListAsync());
+
+            return WebOrderSummaryReport;
+
+
+        }
     }
 }

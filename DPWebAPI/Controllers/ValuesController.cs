@@ -471,5 +471,26 @@ namespace DPWebAPI.Controllers
 
             return new JsonResult(jsonData);
         }
+
+        [HttpGet("GetWebOrderHistorySummaryReport")]
+        public async Task<IActionResult> GetWebOrderHistorySummaryReport(string xml)
+        {
+
+            IEnumerable<Common.WebOrderHistorySummaryReport> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await ReportService.GetWebOrderHistorySummaryReportAsync(xml.ToString());
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
     }
 }
