@@ -347,7 +347,14 @@ namespace DPWebAPI.Entities
             public decimal DAYS121TO150 { get; set; }
             public decimal ABOVE151DAYS { get; set; }
         }
-        
+        public class DPPageMaster
+        {
+            [Key]
+            public int PageID { get; set; }
+            public string PageName { get; set; }
+
+
+        }
     }
 
 }
