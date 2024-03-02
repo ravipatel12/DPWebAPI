@@ -71,5 +71,6 @@ namespace DPWebAPI.DBContexts
         public DbSet<Common.ComapanyMaster> Company { get; set; }
         public DbSet<Common.AccountsOutstandingSummary> OutstandingS { get; set; }
         public DbSet<Common.AccountsOutstandingDetails> OutstandingD { get; set; }
+        public DbSet<Common.DPPageMaster> DPPage { get; set; }
     }
 }

@@ -471,5 +471,131 @@ namespace DPWebAPI.Controllers
 
             return new JsonResult(jsonData);
         }
+
+        [HttpGet("GetBannerCatalog")]
+        public async Task<IActionResult> GetBannerCatalog()
+        {
+
+            string result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetBannerCatalogAsync();
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+
+
+        [HttpGet("GetDPPageType")]
+        public async Task<IActionResult> GetDPPageType()
+        {
+
+            IEnumerable<Common.DPPageMaster> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetDPPageTypeAsync();
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+
+
+        [HttpPost("SaveDPMasterData")]
+        //[Route("AjaxMethod")]
+        [Consumes("application/xml", "application/json")]
+        [Produces("application/xml", "application/json")]
+        //[EnableCors("AllowAllHeaders")]
+        //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)
+        public async Task<IActionResult> SaveDPMasterData(string TableName, string TableName1, int UserID, [FromBody] XElement xml)
+        {
+
+            IEnumerable<Common.ErrorMessage> result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.SaveDPMasterDataAsync(TableName, TableName1, UserID, xml.ToString());
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+
+
+        [HttpGet("GetBannerCatelogueForView")]
+        public async Task<IActionResult> GetBannerCatelogueForView()
+        {
+
+            string result = null;
+            var jsonData = new object();
+            try
+            {
+                result = await CommonModule.GetBannerCatelogueForViewAsync();
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+            }
+            catch (Exception ex)
+            {
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+            return new JsonResult(jsonData);
+        }
+
+        [HttpPost("SaveEnquiry")]
+        //[Route("AjaxMethod")]
+        [Consumes("application/xml", "application/json")]
+        [Produces("application/xml", "application/json")]
+        //[EnableCors("AllowAllHeaders")]
+        //public async Task<IActionResult> GetWebOrderHistoryReport([FromBody] XElement xml)
+        public async Task<IActionResult> SaveEnquiry(string TableName, int UserID, [FromBody] XElement xml)
+        {
+
+            //IEnumerable<Common.ErrorMessage> result = null;
+            string result = "";
+            var jsonData = new object();
+            int message = 0;
+            try
+            {
+                result = await CommonModule.SaveEnquiry(TableName, UserID, xml.ToString());
+                jsonData = new { Data = result, StatusID = HttpStatusCode.OK, Status = "Success" };
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+
+                jsonData = new { Data = result, StatusID = HttpStatusCode.BadRequest, Status = ex.Message };
+
+            }
+
+
+            return new JsonResult(jsonData);
+        }
     }
 }
