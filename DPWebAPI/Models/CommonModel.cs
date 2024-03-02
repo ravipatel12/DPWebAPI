@@ -561,8 +561,121 @@ namespace DPWebAPI.Models
 
             return OutstandingD;
         }
+        public async Task<string> GetBannerCatalogAsync()
+        {
+
+            DataSet ds = new DataSet();
+            ExecuteProc("DPReadadminMaster", ref ds);
+            string data = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            //var wotosoDetails = JsonConvert.DeserializeObject<IEnumerable<IActionResult>>(data);
+            return data;
+        }
+
+        public async Task<IEnumerable<Common.DPPageMaster>> GetDPPageTypeAsync()
+        {
+
+            var DPPageType = await Task.Run(() => _dbContext.DPPage
+                            .FromSqlRaw(@"exec GetDPPageType").ToListAsync());
+
+            return DPPageType;
+
+
+        }
+
+        public async Task<IEnumerable<Common.ErrorMessage>> SaveDPMasterDataAsync(string TableName, string TableName1,int UserID, string xml)
+        {
+            List<Common.ErrorMessage> msg = new List<Common.ErrorMessage>();
+
+            // IEnumerable<Common.ErrorMessage> enumerable = (IEnumerable<Common.ErrorMessage>)msg;
+
+
+            var param = new SqlParameter[] {
+            new SqlParameter() {
+             ParameterName = "@XMLDOC",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = xml
+            },
+             new SqlParameter() {
+             ParameterName = "@BannerTableName",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = TableName
+            },
+            new SqlParameter() {
+             ParameterName = "@CatalogTableName",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = TableName1
+            },
+            new SqlParameter() {
+             ParameterName = "@UserId",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Input,
+             Value = UserID
+            },
+            new SqlParameter() {
+             ParameterName = "@ErrNo",
+             SqlDbType =  System.Data.SqlDbType.Int,
+             Direction = System.Data.ParameterDirection.Output,
+            },
+            new SqlParameter() {
+             ParameterName = "@Errmsg",
+             SqlDbType =  System.Data.SqlDbType.VarChar,
+             Direction = System.Data.ParameterDirection.Output,
+             Size = 50
+            }};
+
+
+
+
+            //var ItemDetailsForPO = await Task.Run(() => _dbContext.ItemDetailsForPO
+            //                .FromSqlRaw(@"exec SaveOrderDetailsForJDP @TableName,@xml,@ErroOut,@ErrMsg", param.ToArray()).ToListAsync());
+
+            var sql = "exec SaveDPMasterData @XMLDoc,@BannerTableName,@CatalogTableName,@UserId,@ErrNo OUT,@ErrMsg OUT";
+            var resultObj = _dbContext.Database.ExecuteSqlRaw(sql, param.ToArray());
+
+            //msg.ErrorId = Convert.ToInt32(param[2].Value.ToString());
+            //msg.ErrorMsg = param[3].Value.ToString();
+
+            msg.Add(new Common.ErrorMessage { ErrorId = Convert.ToInt32(param[4].Value.ToString()), ErrorMsg = param[5].Value.ToString() });
+
+            return msg;
+
+
+        }
 
         
+
+        public async Task<string> GetBannerCatelogueForViewAsync()
+        {
+
+            DataSet ds = new DataSet();
+            ExecuteProc("GetDPBannerCatalogData", ref ds);
+            string data = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            //var wotosoDetails = JsonConvert.DeserializeObject<IEnumerable<IActionResult>>(data);
+            return data;
+        }
+
+
+        public async Task<string> SaveEnquiry(string TableName, int UserID, string xml)
+        {
+
+            DataSet ds = new DataSet();
+            var param = new List<SqlParameter>();
+            param.Add(new SqlParameter("@TableName", TableName));
+            param.Add(new SqlParameter("@xml", xml));
+            param.Add(new SqlParameter("@UserID", UserID));
+
+            ExecuteProc("sp_SaveEnquiry", param.ToArray(), ref ds);
+            string data = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            //var wotosoDetails = JsonConvert.DeserializeObject<IEnumerable<IActionResult>>(data);
+
+            return data;
+
+
+        }
+
     }
 
 }

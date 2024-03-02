@@ -347,24 +347,7 @@ namespace DPWebAPI.Entities
             public decimal DAYS121TO150 { get; set; }
             public decimal ABOVE151DAYS { get; set; }
         }
-
-
-        public class WebOrderHistorySummaryReport
-        {
-            public string? Category { get; set; }
-            public string? SubCategory { get; set; }
-            public string? ItemType { get; set; }
-            public string? OurCode { get; set; }
-            public string? OurName { get; set; }
-            public string? ItemCode { get; set; }
-            public string? ItemName { get; set; }
-            public string? UOM { get; set; }
-            public decimal WOQty { get; set; }
-            public decimal SOQty { get; set; }
-            public decimal DispatchQty { get; set; }
-            public decimal BalanceQty { get; set; }
-        }
-
+        
     }
 
 }

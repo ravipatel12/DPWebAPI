@@ -28,5 +28,15 @@ namespace DPWebAPI.Models
 
         public Task<IEnumerable<Common.AccountsOutstandingSummary>> GetAccountsOutstandingSummariesAsync(int CompanyID,int ReportType,DateTime ToDate,int PartyId);
         public Task<IEnumerable<Common.AccountsOutstandingDetails>> GetAccountsOutstandingDetailsAsync(int CompanyID, int ReportType, DateTime ToDate, int PartyId);
+
+        public Task<string> GetBannerCatalogAsync();
+
+        public Task<IEnumerable<Common.DPPageMaster>> GetDPPageTypeAsync();
+
+        public Task<IEnumerable<Common.ErrorMessage>> SaveDPMasterDataAsync(string TableName, string TableName1,int UserID, string xml);
+
+        public Task<string> SaveEnquiry(string TableName, int UserID, string xml);
+
+        public Task<string> GetBannerCatelogueForViewAsync();
     }
 }
