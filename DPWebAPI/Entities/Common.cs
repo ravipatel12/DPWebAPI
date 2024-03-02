@@ -34,14 +34,10 @@ namespace DPWebAPI.Entities
             public string LastLoginTime { get; set; }
             public bool Agent { get; set; }
             public bool IsAdmin { get; set; }
-
-
-
-
         }
+
         public class WebOrderHistoryReport
         {
-
             public string Client { get; set; }
             public int WebOrderID { get; set; }
             public string WebOrderNo { get; set; }
@@ -62,7 +58,6 @@ namespace DPWebAPI.Entities
             public string? SalesOrderNo { get; set; }
             public string? Remarks { get; set; }
             public string DispatchDetails { get; set; }
-
 
         }
         public class ItemTypeMaster
@@ -264,7 +259,7 @@ namespace DPWebAPI.Entities
 
         public class DispatchDetails
         {
-            
+
             public string? InvoiceNo { get; set; }
             public string? InvoiceDate { get; set; }
             public string? ClientCode { get; set; }
@@ -352,16 +347,7 @@ namespace DPWebAPI.Entities
             public decimal DAYS121TO150 { get; set; }
             public decimal ABOVE151DAYS { get; set; }
         }
-
-        public class DPPageMaster
-        {
-            [Key]
-            public int PageID { get; set; }
-            public string PageName { get; set; }
-          
-
-        }
-
+        
     }
 
 }

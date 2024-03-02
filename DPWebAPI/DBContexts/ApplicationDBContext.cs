@@ -46,6 +46,10 @@ namespace DPWebAPI.DBContexts
             modelBuilder.Entity<Common.DispatchDetails>()
               .HasNoKey()
               .ToView("DispatchDetailsView");
+
+            modelBuilder.Entity<Common.WebOrderHistorySummaryReport>()
+               .HasNoKey()
+               .ToView("WebOrderHistorySummaryView");
         }
 
         public DbSet<Common.UserDetails> UserDetail { get; set; }
@@ -67,7 +71,5 @@ namespace DPWebAPI.DBContexts
         public DbSet<Common.ComapanyMaster> Company { get; set; }
         public DbSet<Common.AccountsOutstandingSummary> OutstandingS { get; set; }
         public DbSet<Common.AccountsOutstandingDetails> OutstandingD { get; set; }
-
-        public DbSet<Common.DPPageMaster> DPPage { get; set; }
     }
 }
